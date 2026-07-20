@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Keystone SAP Advisory — favicon. Navy keystone stone with a Space Grotesk
+     "K" knocked out, matching the header/footer logo mark. Full-bleed for tab clarity. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 108" width="100" height="108" role="img" aria-label="Keystone SAP Advisory">
+  <mask id="fk">
+    <rect width="100" height="108" fill="#fff"/>
+    <path transform="translate(26.6 78.5) scale(0.0743 -0.0743)" d="M66 0V700H198V422H216L443 700H612L320 355L622 0H448L216 284H198V0Z" fill="#000"/>
+  </mask>
+  <path d="M31 2 H69 A4 4 0 0 1 72.9 5.1 L98 98 A5 5 0 0 1 93 104 H7 A5 5 0 0 1 2 98 L27.1 5.1 A4 4 0 0 1 31 2 Z" fill="#0A2540" mask="url(#fk)"/>
+</svg>

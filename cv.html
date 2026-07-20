@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ganesh Prabhu · Curriculum Vitae · Keystone SAP Advisory</title>
+<meta name="description" content="Curriculum vitae of Ganesh Prabhu, SAP Solution Architect. 22 years across SAP S/4HANA Project System, enterprise architecture, and global rollouts in Europe, the Middle East, and APAC.">
+
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink: #0A1B2E;
+    --navy: #0A2540;
+    --primary: #0A4B8C;
+    --accent: #2E90FA;
+    --accent-soft: #6FB4FB;
+    --glow: #64CEFB;
+    --glow-soft: #9BDDFF;
+    --paper: #FFFFFF;
+    --mist: #F4F7FB;
+    --slate: #4A5B70;
+    --slate-2: #7C8AA0;
+    --border: #E4EAF1;
+
+    --display: 'Schibsted Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --body: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+    --ease: cubic-bezier(.22,.61,.36,1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    font-family: var(--body);
+    color: var(--navy);
+    background: var(--mist);
+    line-height: 1.6;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 { font-family: var(--display); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; margin: 0; color: var(--navy); }
+  p { margin: 0; }
+  a { color: inherit; text-decoration: none; }
+
+  /* ShinyText: same signature sweep as the site hero. */
+  .shine {
+    background: linear-gradient(100deg, var(--glow) 35%, #ffffff 50%, var(--glow) 65%);
+    background-size: 200% auto; background-position: 120% center;
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: transparent;
+    animation: shineSweep 3s linear infinite;
+  }
+  @keyframes shineSweep { to { background-position: -80% center; } }
+  @media (prefers-reduced-motion: reduce) { .shine { animation: none; background-position: 50% center; } }
+
+  /* ---- Top bar ---- */
+  .topbar { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.85); backdrop-filter: saturate(180%) blur(18px); -webkit-backdrop-filter: saturate(180%) blur(18px); border-bottom: 1px solid var(--border); }
+  .topbar-inner { max-width: 940px; margin: 0 auto; padding: 0 32px; height: 66px; display: flex; align-items: center; justify-content: space-between; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand .mark { width: 30px; height: auto; flex: none; }
+  .brand .word { display: flex; flex-direction: column; line-height: 1; }
+  .brand .word b { font-family: var(--display); font-weight: 700; font-size: 16px; color: var(--navy); }
+  .brand .word span { font-family: var(--body); font-size: 9px; letter-spacing: .26em; color: var(--slate-2); margin-top: 4px; font-weight: 600; }
+  .top-actions { display: flex; align-items: center; gap: 10px; }
+  .lnk { font-size: 14.5px; font-weight: 500; color: var(--slate); padding: 8px 14px; border-radius: 100px; transition: background .2s, color .2s; }
+  .lnk:hover { color: var(--navy); background: var(--mist); }
+  .btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--body); font-weight: 600; font-size: 14.5px; padding: 10px 20px; border-radius: 100px; cursor: pointer; border: none; transition: transform .3s var(--ease), box-shadow .3s var(--ease), background .25s; }
+  .btn--primary { background: var(--ink); color: #fff; }
+  .btn--primary:hover { transform: translateY(-2px); background: #0d2846; }
+  .btn svg { width: 16px; height: 16px; }
+
+  /* ---- Document sheet ---- */
+  .sheet { max-width: 940px; margin: 34px auto 60px; background: var(--paper); border: 1px solid var(--border); border-radius: 22px; overflow: hidden; box-shadow: 0 40px 90px -50px rgba(10,37,64,.35); }
+
+  /* Masthead */
+  .masthead { position: relative; background: linear-gradient(155deg, #0A1B2E 0%, #0A2540 55%, #0A4B8C 120%); color: #fff; padding: 54px 56px 46px; overflow: hidden; }
+  .masthead::before { content: ""; position: absolute; inset: 0; background: radial-gradient(70% 90% at 88% 0%, rgba(100,206,251,.32), transparent 60%); }
+  .mast-inner { position: relative; z-index: 2; display: flex; gap: 34px; align-items: center; }
+  .mast-photo { width: 116px; height: 116px; border-radius: 20px; object-fit: cover; flex: none; border: 4px solid rgba(255,255,255,.16); box-shadow: 0 20px 40px -18px rgba(0,0,0,.5); background: var(--mist); }
+  .mast-text { min-width: 0; }
+  .mast-text .kicker { font-size: 12px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--accent-soft); margin-bottom: 12px; }
+  .mast-text h1 { font-size: clamp(32px, 5vw, 46px); color: #fff; letter-spacing: -0.03em; font-weight: 800; }
+  .mast-text .title { font-size: 18px; color: rgba(233,241,250,.92); margin-top: 8px; font-weight: 500; }
+  .mast-meta { position: relative; z-index: 2; display: flex; flex-wrap: wrap; gap: 10px 26px; margin-top: 30px; }
+  .mast-meta a, .mast-meta span { display: inline-flex; align-items: center; gap: 9px; font-size: 14.5px; color: rgba(233,241,250,.82); }
+  .mast-meta a:hover { color: #fff; }
+  .mast-meta svg { width: 16px; height: 16px; opacity: .8; }
+
+  /* Body layout */
+  .doc { padding: 48px 56px 56px; }
+  .lede { font-size: 18.5px; color: var(--slate); line-height: 1.62; max-width: 66ch; padding-bottom: 40px; border-bottom: 1px solid var(--border); }
+  .lede b { color: var(--navy); font-weight: 600; }
+
+  .block { padding: 40px 0; border-bottom: 1px solid var(--border); }
+  .block:last-child { border-bottom: none; padding-bottom: 6px; }
+  .block-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 26px; }
+  .block-head .n { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--slate-2); letter-spacing: .08em; }
+  .block-head h2 { font-size: 24px; }
+
+  /* Stat row */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: -6px; }
+  .stat { background: var(--mist); border: 1px solid var(--border); border-radius: 14px; padding: 20px; text-align: center; }
+  .stat .num { font-family: var(--display); font-size: 34px; font-weight: 800; color: var(--navy); line-height: 1; letter-spacing: -0.03em; }
+  .stat .num em { font-style: normal; color: var(--slate-2); }
+  .stat .lbl { font-size: 12.5px; color: var(--slate-2); margin-top: 9px; line-height: 1.35; }
+
+  /* Experience */
+  .xp { position: relative; padding-left: 26px; }
+  .xp::before { content: ""; position: absolute; left: 4px; top: 6px; bottom: 6px; width: 2px; background: var(--border); }
+  .xp-item { position: relative; padding-bottom: 30px; }
+  .xp-item:last-child { padding-bottom: 0; }
+  .xp-item::before { content: ""; position: absolute; left: -26px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--navy); border: 3px solid #fff; box-shadow: 0 0 0 1px var(--border); }
+  .xp-item h3 { font-size: 18px; }
+  .xp-item .org { font-size: 14.5px; color: var(--primary); font-weight: 600; margin-top: 3px; }
+  .xp-item .desc { font-size: 15px; color: var(--slate); margin-top: 8px; max-width: 62ch; }
+
+  /* Two-column area */
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+
+  /* Credentials list */
+  .cred { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .cred:last-child { border-bottom: none; }
+  .cred .badge { width: 38px; height: 38px; flex: none; border-radius: 11px; background: var(--navy); display: flex; align-items: center; justify-content: center; }
+  .cred .badge svg { width: 20px; height: 20px; }
+  .cred h4 { font-size: 15px; font-weight: 700; }
+  .cred p { font-size: 13.5px; color: var(--slate-2); margin-top: 2px; }
+
+  /* Skills / chips */
+  .chips { display: flex; flex-wrap: wrap; gap: 9px; }
+  .chip { font-size: 13.5px; font-weight: 500; color: var(--slate); background: var(--mist); border: 1px solid var(--border); padding: 7px 14px; border-radius: 100px; }
+
+  .skill-group { margin-bottom: 22px; }
+  .skill-group:last-child { margin-bottom: 0; }
+  .skill-group .g-lbl { font-size: 12.5px; font-weight: 600; letter-spacing: .04em; color: var(--slate-2); text-transform: uppercase; margin-bottom: 12px; }
+
+  /* Education */
+  .edu-item { padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .edu-item:last-child { border-bottom: none; }
+  .edu-item h4 { font-size: 15.5px; }
+  .edu-item p { font-size: 13.5px; color: var(--slate-2); margin-top: 3px; }
+
+  /* Footer of sheet */
+  .sheet-foot { background: var(--ink); color: rgba(233,241,250,.6); padding: 26px 56px; display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+  .sheet-foot .fb { display: flex; align-items: center; gap: 11px; }
+  .sheet-foot .fb .mark { width: 24px; height: auto; }
+  .sheet-foot .fb b { font-family: var(--display); color: #fff; font-size: 14px; font-weight: 700; }
+  .sheet-foot a { color: rgba(233,241,250,.7); }
+  .sheet-foot a:hover { color: #fff; }
+  .sheet-foot .fc { font-size: 13px; }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 720px) {
+    .masthead { padding: 40px 30px 34px; }
+    .mast-inner { flex-direction: column; align-items: flex-start; gap: 22px; }
+    .doc { padding: 36px 30px 40px; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .cols { grid-template-columns: 1fr; gap: 34px; }
+    .topbar-inner, .sheet-foot { padding-left: 24px; padding-right: 24px; }
+    .lnk.hide-sm { display: none; }
+    .sheet-foot { padding: 24px 30px; }
+  }
+
+  /* ---- Print ---- */
+  @media print {
+    body { background: #fff; font-size: 11pt; }
+    .topbar { display: none; }
+    .sheet { max-width: none; margin: 0; border: none; border-radius: 0; box-shadow: none; }
+    .masthead { background: #0A2540 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; padding: 30px 34px; }
+    .masthead::before { display: none; }
+    .doc { padding: 28px 34px; }
+    .block { padding: 22px 0; }
+    .xp-item { break-inside: avoid; }
+    .stat, .cred, .chip { break-inside: avoid; }
+    .sheet-foot { background: #fff !important; color: var(--slate-2); border-top: 1px solid var(--border); }
+    .sheet-foot .fb b, .sheet-foot a { color: var(--navy); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html" aria-label="Keystone SAP Advisory home">
+      <svg class="mark" viewBox="0 0 100 108" aria-hidden="true">
+        <mask id="kmTop">
+          <rect width="100" height="108" fill="#fff"/>
+          <path transform="translate(27.394 77.000) scale(0.06571 -0.06571)" d="M66 0V700H198V422H216L443 700H612L320 355L622 0H448L216 284H198V0Z" fill="#000"/>
+        </mask>
+        <path d="M34 6 H66 A4 4 0 0 1 69.9 9.1 L94 94 A5 5 0 0 1 89 100 H11 A5 5 0 0 1 6 94 L30.1 9.1 A4 4 0 0 1 34 6 Z" fill="#0A2540" mask="url(#kmTop)"/>
+      </svg>
+      <span class="word"><b>Keystone</b><span>SAP ADVISORY</span></span>
+    </a>
+    <div class="top-actions">
+      <a class="lnk hide-sm" href="index.html">← Back to site</a>
+      <button class="btn btn--primary" onclick="window.print()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg>
+        Download PDF
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CV SHEET ============ -->
+<div class="sheet">
+
+  <!-- Masthead -->
+  <div class="masthead">
+    <div class="mast-inner">
+      <img class="mast-photo" src="assets/images/ganesh-headshot.jpg" alt="Ganesh Prabhu, SAP Solution Architect">
+      <div class="mast-text">
+        <div class="kicker">Curriculum Vitae</div>
+        <h1><span class="shine">Ganesh Prabhu</span></h1>
+        <div class="title">SAP Solution Architect · Project System</div>
+      </div>
+    </div>
+    <div class="mast-meta">
+      <span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Mumbai, India · Available remote
+      </span>
+      <!-- EDIT: replace with a real email once set up. Currently a placeholder. -->
+      <a href="mailto:ganesh@keystonesapadvisory.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="M3 6l9 6 9-6"/></svg>
+        ganesh@keystonesapadvisory.com
+      </a>
+      <a href="https://in.linkedin.com/in/ganesh-prabhu-70225b4" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.75v20.5C0 23.2.8 24 1.77 24h20.45c.98 0 1.78-.8 1.78-1.75V1.75C24 .78 23.2 0 22.22 0z"/></svg>
+        LinkedIn
+      </a>
+    </div>
+  </div>
+
+  <div class="doc">
+
+    <!-- Summary -->
+    <p class="lede"><b>SAP Solution Architect with 22 years in SAP Project System.</b> I design and deliver S/4HANA solutions for large enterprises and stay with a program from the first blueprint through go-live and hypercare. My work connects Project System to Finance, Controlling, Procurement, Sales, Plant Maintenance, and Logistics, so the business runs on one system it can rely on.</p>
+
+    <!-- At a glance -->
+    <div class="block">
+      <div class="block-head"><span class="n">01</span><h2>At a glance</h2></div>
+      <div class="stats">
+        <div class="stat"><div class="num">22<em>+</em></div><div class="lbl">Years of SAP consulting</div></div>
+        <div class="stat"><div class="num">7</div><div class="lbl">S/4HANA implementations</div></div>
+        <div class="stat"><div class="num">3</div><div class="lbl">Global rollouts</div></div>
+        <div class="stat"><div class="num">8</div><div class="lbl">Industries served</div></div>
+      </div>
+    </div>
+
+    <!-- Experience -->
+    <div class="block">
+      <div class="block-head"><span class="n">02</span><h2>Experience</h2></div>
+      <div class="xp">
+        <div class="xp-item">
+          <h3>SAP Solution Architect</h3>
+          <div class="org">Tata Consultancy Services</div>
+          <p class="desc">Led S/4HANA Project System solution architecture for large-scale enterprise transformation programs.</p>
+        </div>
+        <div class="xp-item">
+          <h3>Principal Consultant</h3>
+          <div class="org">Infosys Limited</div>
+          <p class="desc">Directed global cross-functional teams through design, build, and deployment of integrated SAP PS solutions.</p>
+        </div>
+        <div class="xp-item">
+          <h3>Principal Consultant</h3>
+          <div class="org">PricewaterhouseCoopers (PwC)</div>
+          <p class="desc">Advised enterprise clients on SAP Project System strategy, blueprinting, and delivery excellence.</p>
+        </div>
+        <div class="xp-item">
+          <h3>SAP PS Consultant</h3>
+          <div class="org">Capgemini / Ernst &amp; Young</div>
+          <p class="desc">Delivered SAP Project System configuration and integration across complex client landscapes.</p>
+        </div>
+        <div class="xp-item">
+          <h3>SAP PS Consultant, Centre of Excellence</h3>
+          <div class="org">Al-Ghanim Industries</div>
+          <p class="desc">Led a SAP PS Centre of Excellence supporting four business units across the Middle East and India.</p>
+        </div>
+        <div class="xp-item">
+          <h3>Lead SAP PS Consultant</h3>
+          <div class="org">Bristlecone</div>
+          <p class="desc">Delivered a greenfield S/4HANA PS implementation for EPC business scenarios, leading the work through hypercare.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Expertise + Credentials -->
+    <div class="block">
+      <div class="cols">
+        <div>
+          <div class="block-head"><span class="n">03</span><h2>Expertise</h2></div>
+          <div class="skill-group">
+            <div class="g-lbl">SAP Project System</div>
+            <div class="chips">
+              <span class="chip">WBS &amp; network design</span>
+              <span class="chip">Budgeting &amp; availability control</span>
+              <span class="chip">Cost planning</span>
+              <span class="chip">Scheduling</span>
+              <span class="chip">Settlement</span>
+              <span class="chip">Results analysis</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <div class="g-lbl">Architecture &amp; delivery</div>
+            <div class="chips">
+              <span class="chip">Solution blueprinting</span>
+              <span class="chip">Fit-gap analysis</span>
+              <span class="chip">Target operating models</span>
+              <span class="chip">Greenfield &amp; brownfield</span>
+              <span class="chip">Global rollouts</span>
+              <span class="chip">SIT / UAT / cutover</span>
+              <span class="chip">Hypercare</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <div class="g-lbl">Integration</div>
+            <div class="chips">
+              <span class="chip">Finance</span>
+              <span class="chip">Controlling</span>
+              <span class="chip">Procurement</span>
+              <span class="chip">Sales</span>
+              <span class="chip">Plant Maintenance</span>
+              <span class="chip">Logistics</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="block-head"><span class="n">04</span><h2>Credentials</h2></div>
+          <div class="cred">
+            <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M9 14l-2 7 5-3 5 3-2-7"/></svg></div>
+            <div><h4>SAP Certified Application Associate</h4><p>SAP S/4HANA Portfolio &amp; Project Management</p></div>
+          </div>
+          <div class="cred">
+            <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M9 14l-2 7 5-3 5 3-2-7"/></svg></div>
+            <div><h4>SAP Certified Application Consultant</h4><p>SAP Project System (PS)</p></div>
+          </div>
+          <div class="cred">
+            <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12v6a6 6 0 0 1-12 0z"/><path d="M12 14v4M8 22h8"/></svg></div>
+            <div><h4>Project Management Professional (PMP)</h4><p>Project Management Institute</p></div>
+          </div>
+
+          <div class="block-head" style="margin-top:30px;"><span class="n">05</span><h2>Education</h2></div>
+          <div class="edu-item">
+            <h4>Master's in Financial Management</h4>
+            <p>Postgraduate qualification</p>
+          </div>
+          <div class="edu-item">
+            <h4>B.E. Chemical Engineering</h4>
+            <p>Bachelor of Engineering</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Industries -->
+    <div class="block">
+      <div class="block-head"><span class="n">06</span><h2>Industries</h2></div>
+      <div class="chips">
+        <span class="chip">Engineering &amp; Construction</span>
+        <span class="chip">Manufacturing</span>
+        <span class="chip">Chemical</span>
+        <span class="chip">Pharmaceutical</span>
+        <span class="chip">Telecommunications</span>
+        <span class="chip">Hospitality</span>
+        <span class="chip">Media</span>
+        <span class="chip">Power &amp; Utilities</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Sheet footer -->
+  <div class="sheet-foot">
+    <div class="fb">
+      <svg class="mark" viewBox="0 0 100 108" aria-hidden="true">
+        <mask id="kmFoot">
+          <rect width="100" height="108" fill="#fff"/>
+          <path transform="translate(27.394 77.000) scale(0.06571 -0.06571)" d="M66 0V700H198V422H216L443 700H612L320 355L622 0H448L216 284H198V0Z" fill="#000"/>
+        </mask>
+        <path d="M34 6 H66 A4 4 0 0 1 69.9 9.1 L94 94 A5 5 0 0 1 89 100 H11 A5 5 0 0 1 6 94 L30.1 9.1 A4 4 0 0 1 34 6 Z" fill="#fff" mask="url(#kmFoot)"/>
+      </svg>
+      <b>Keystone SAP Advisory</b>
+    </div>
+    <a href="index.html">keystonesapadvisory.com</a>
+    <div class="fc">© 2026 Ganesh Prabhu</div>
+  </div>
+
+</div>
+
+</body>
+</html>

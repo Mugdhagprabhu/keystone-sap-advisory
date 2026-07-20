@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keystone SAP Advisory · Ganesh Prabhu, SAP Solution Architect</title>
+<meta name="description" content="Keystone SAP Advisory. SAP S/4HANA Project System architecture and enterprise transformation, led by Ganesh Prabhu, an SAP Solution Architect with 22 years of experience across Europe, the Middle East, and APAC.">
+
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+<!-- Type system: Schibsted Grotesk (display) + Hanken Grotesk (body). Distinctive, clean, non-generic. System fallbacks so it looks right offline. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink: #0A1B2E;         /* deepest navy */
+    --navy: #0A2540;        /* brand navy */
+    --primary: #0A4B8C;
+    --accent: #2E90FA;
+    --accent-soft: #6FB4FB;
+    --glow: #64CEFB;        /* luminous accent, tuned to the hero shine */
+    --glow-soft: #9BDDFF;
+    --paper: #FFFFFF;
+    --mist: #F4F7FB;        /* soft section bg */
+    --slate: #4A5B70;
+    --slate-2: #7C8AA0;
+    --border: #E4EAF1;
+    --white: #FFFFFF;
+
+    --display: 'Schibsted Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --body: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+    --maxw: 1200px;
+    --ease: cubic-bezier(.22,.61,.36,1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    font-family: var(--body);
+    color: var(--navy);
+    background: var(--paper);
+    line-height: 1.65;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--display);
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    margin: 0;
+    color: var(--navy);
+  }
+  p { margin: 0; }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+
+  /* Typographic hygiene: balanced headings, no stranded last-line words (widows). */
+  h1, h2, h3, h4, .eyebrow, .sec-head p, .hero-kicker { text-wrap: balance; }
+  p, .tl-detail, .svc p, .cert p, .about-copy .body p { text-wrap: pretty; }
+
+  .container { max-width: var(--maxw); margin: 0 auto; padding: 0 32px; }
+  .section { padding: clamp(72px, 11vw, 150px) 0; }
+
+  .eyebrow {
+    font-family: var(--body);
+    font-size: 12.5px; font-weight: 600;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--slate-2);
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+  .eyebrow.center { text-align: center; }
+
+  /* ---- Buttons ---- */
+  .btn {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-family: var(--body); font-weight: 600; font-size: 15.5px;
+    padding: 14px 26px; border-radius: 100px;
+    transition: transform .3s var(--ease), box-shadow .3s var(--ease), background .25s, color .25s, border-color .25s;
+    cursor: pointer; border: none; white-space: nowrap;
+  }
+  .btn .arw { transition: transform .3s var(--ease); }
+  .btn:hover .arw { transform: translateX(4px); }
+  .btn--primary { background: var(--ink); color: #fff; }
+  .btn--primary:hover { transform: translateY(-2px); background: #0d2846; }
+  /* White pill for dark sections (matches the hero CTA) */
+  .btn--white { background: #fff; color: var(--ink); box-shadow: 0 10px 30px -14px rgba(0,0,0,.5); }
+  .btn--white:hover { transform: translateY(-2px); box-shadow: 0 16px 38px -16px rgba(0,0,0,.6); }
+  .btn--dark { background: var(--navy); color: #fff; }
+  .btn--dark:hover { transform: translateY(-2px); background: var(--ink); }
+  .btn--ghost { border: 1.5px solid rgba(255,255,255,.35); color: #fff; }
+  .btn--ghost:hover { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.6); }
+  .btn--line { border: 1.5px solid var(--border); color: var(--navy); background: #fff; }
+  .btn--line:hover { border-color: var(--navy); color: var(--navy); transform: translateY(-2px); }
+  .btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+  /* ---- Header ---- */
+  header.site {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    transition: background .35s var(--ease), box-shadow .35s var(--ease), border-color .35s;
+    border-bottom: 1px solid transparent;
+  }
+  header.site.scrolled {
+    background: rgba(255,255,255,.82);
+    backdrop-filter: saturate(180%) blur(18px);
+    -webkit-backdrop-filter: saturate(180%) blur(18px);
+    border-bottom-color: var(--border);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 76px; }
+  .brand { display: flex; align-items: center; gap: 13px; color: #fff; transition: color .35s; }
+  header.site.scrolled .brand { color: var(--navy); }
+  .brand .mark { width: 32px; height: auto; flex: none; }
+  .brand .word { display: flex; flex-direction: column; line-height: 1; }
+  .brand .word b { font-family: var(--display); font-weight: 700; font-size: 17px; letter-spacing: .01em; color: #fff; transition: color .35s; }
+  .brand .word span { font-family: var(--body); font-size: 9.5px; letter-spacing: .28em; color: rgba(255,255,255,.7); margin-top: 4px; font-weight: 600; transition: color .35s; }
+  header.site.scrolled .brand .word b { color: var(--navy); }
+  header.site.scrolled .brand .word span { color: var(--slate-2); }
+
+  .nav-right { display: flex; align-items: center; gap: 8px; }
+  /* Pill-shaped nav container (DesignPro style) */
+  nav.links {
+    display: flex; gap: 2px; align-items: center; margin-right: 8px;
+    border: 1px solid rgba(255,255,255,.22); border-radius: 100px; padding: 4px 6px;
+    transition: border-color .35s, background .35s;
+  }
+  nav.links a {
+    font-size: 14px; font-weight: 500; color: rgba(255,255,255,.8);
+    padding: 8px 16px; border-radius: 100px; transition: color .2s, background .2s;
+  }
+  nav.links a:hover { color: #fff; background: rgba(255,255,255,.12); }
+  header.site.scrolled nav.links { border-color: var(--border); background: #fff; }
+  header.site.scrolled nav.links a { color: var(--slate); }
+  header.site.scrolled nav.links a:hover { color: var(--navy); background: var(--mist); }
+
+  /* Header icon buttons (LinkedIn + email) */
+  .icon-btn {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,.85); border: 1px solid rgba(255,255,255,.22);
+    transition: all .25s var(--ease);
+  }
+  .icon-btn:hover { background: #fff; color: var(--navy); border-color: #fff; transform: translateY(-2px); }
+  header.site.scrolled .icon-btn { color: var(--slate); border-color: var(--border); }
+  header.site.scrolled .icon-btn:hover { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .icon-btn svg { width: 18px; height: 18px; }
+  .nav-cta { margin-left: 4px; }
+
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; color: #fff; }
+  header.site.scrolled .nav-toggle { color: var(--navy); }
+
+  /* ---- Hero (DesignPro-style: full-screen video, centered headline) ---- */
+  .hero { position: relative; min-height: 100vh; display: flex; background: #000; color: #fff; overflow: hidden; }
+  .hero-video { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; }
+  .hero-overlay {
+    position: absolute; inset: 0; z-index: 1;
+    background:
+      radial-gradient(75% 70% at 20% 60%, rgba(100,206,251,.18), transparent 55%),
+      linear-gradient(180deg, rgba(4,10,20,.62) 0%, rgba(4,10,20,.42) 42%, rgba(4,12,24,.8) 100%);
+  }
+  .hero-content { position: relative; z-index: 2; width: 100%; display: flex; flex-direction: column; padding: 120px 0 64px; }
+
+  /* Two-column intro row */
+  .hero-intro { display: flex; gap: 28px; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; }
+  .hero-intro .intro-left { max-width: 40ch; font-size: 15px; color: rgba(255,255,255,.8); }
+  .hero-intro .intro-right { font-size: 15px; color: rgba(255,255,255,.8); text-align: left; max-width: 30ch; }
+
+  /* Centered headline block */
+  .hero-main { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 40px 0; }
+  .hero-kicker { font-size: 12.5px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--glow-soft); margin-bottom: 22px; }
+  .hero-title { font-weight: 600; line-height: 1.02; letter-spacing: -0.04em; font-size: min(8.4vw, 120px); margin: 0; }
+  .hero-title .line1 { display: block; color: #fff; white-space: nowrap; }
+  .hero-title .line2 { display: block; white-space: nowrap; }
+
+  /* ShinyText: highlight sweeps continuously across the accent line.
+     Base #64CEFB, shine #ffffff, ~3s loop, 100deg spread. */
+  .shine {
+    background: linear-gradient(100deg, var(--glow) 35%, #ffffff 50%, var(--glow) 65%);
+    background-size: 200% auto;
+    background-position: 120% center;
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: transparent;
+    animation: shineSweep 3s linear infinite;
+  }
+  @keyframes shineSweep { to { background-position: -80% center; } }
+
+  /* CTA button with sliding arrow */
+  .hero-cta {
+    align-self: flex-start; margin-top: 44px;
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--body); font-weight: 600; font-size: 16px;
+    color: var(--ink); background: #fff; border: 1px solid transparent;
+    padding: 16px 30px; border-radius: 100px;
+    box-shadow: 0 10px 30px -12px rgba(0,0,0,.5);
+    transition: background .25s var(--ease), transform .25s var(--ease), box-shadow .25s;
+  }
+  .hero-cta:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 16px 38px -14px rgba(0,0,0,.6); }
+  .hero-cta .cta-arrow { width: 19px; height: 19px; transition: transform .3s var(--ease); }
+  .hero-cta:hover .cta-arrow { transform: translateX(5px); }
+
+  /* stat strip riding the hero bottom */
+  .stat-strip { position: relative; z-index: 3; margin-top: -1px; background: var(--navy); }
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+  .stat { padding: 40px 20px; text-align: center; border-right: 1px solid rgba(255,255,255,.1); }
+  .stat:last-child { border-right: none; }
+  .stat .num { font-family: var(--display); font-size: clamp(38px, 4.4vw, 56px); font-weight: 800; color: #fff; line-height: 1; letter-spacing: -0.03em; }
+  .stat .num em { font-style: normal; color: rgba(255,255,255,.45); }
+  .stat .lbl { font-size: 13.5px; color: rgba(233,241,250,.65); margin-top: 12px; letter-spacing: .01em; }
+
+  /* ---- About ---- */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 88px); align-items: center; }
+  .about-copy h2 { font-size: clamp(30px, 4.2vw, 52px); margin-bottom: 26px; }
+  .about-copy .body { color: var(--slate); font-size: 17.5px; }
+  .about-copy .body p + p { margin-top: 20px; }
+  .about-photo { position: relative; }
+  .about-photo .frame { position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 40px 80px -30px rgba(10,37,64,.45); }
+  .about-photo .frame img { width: 100%; aspect-ratio: 4/5; object-fit: cover; }
+  .sig { margin-top: 30px; }
+  .sig .line { font-family: var(--display); font-size: 22px; font-weight: 600; color: var(--navy); }
+  .sig .role { font-size: 13.5px; color: var(--slate-2); }
+
+  /* ---- Section heads ---- */
+  .sec-head { max-width: 660px; margin-bottom: 60px; }
+  .sec-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+  .sec-head h2 { font-size: clamp(30px, 4.4vw, 52px); margin-bottom: 18px; }
+  .sec-head p { color: var(--slate); font-size: 18px; }
+
+  /* ---- Services ---- */
+  #services { background: var(--mist); }
+  .svc-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .svc {
+    background: #fff; border: 1px solid var(--border); border-radius: 20px; padding: 40px;
+    transition: box-shadow .35s var(--ease), border-color .3s;
+    position: relative;
+  }
+  .svc:hover { box-shadow: 0 24px 50px -32px rgba(10,37,64,.22); border-color: #d3ddea; }
+  .svc .ic { width: 54px; height: 54px; border-radius: 14px; background: var(--navy); color: #fff; display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
+  .svc .ic svg { width: 26px; height: 26px; stroke: currentColor; }
+  .svc .no { font-family: var(--display); font-size: 13px; font-weight: 700; color: var(--slate-2); letter-spacing: .1em; }
+  .svc h3 { font-size: 23px; margin: 6px 0 12px; }
+  .svc p { color: var(--slate); font-size: 15.5px; }
+
+  /* ---- Global band (full-bleed image) ---- */
+  .band { position: relative; color: #fff; overflow: hidden; }
+  .band-bg { position: absolute; inset: 0; z-index: 0; }
+  .band-bg img { width: 100%; height: 100%; object-fit: cover; }
+  .band-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10,27,46,.92) 0%, rgba(10,27,46,.78) 45%, rgba(10,37,64,.55) 100%); }
+  .band-inner { position: relative; z-index: 2; padding: clamp(80px, 12vw, 150px) 0; }
+  .band h2 { color: #fff; font-size: clamp(30px, 4.6vw, 56px); max-width: 16ch; margin-bottom: 24px; }
+  .band p { color: rgba(233,241,250,.9); font-size: 19px; max-width: 52ch; }
+  .band .regions-row { display: flex; gap: 40px; margin-top: 46px; flex-wrap: wrap; }
+  .band .region b { font-family: var(--display); font-size: 30px; font-weight: 700; color: #fff; display: block; }
+  .band .region span { font-size: 14px; color: rgba(233,241,250,.65); letter-spacing: .04em; }
+
+  /* ---- Experience ---- */
+  .tl { border-top: 1px solid var(--border); }
+  .tl-item {
+    display: grid; grid-template-columns: 56px 1fr 1.4fr; gap: 28px; align-items: baseline;
+    padding: 30px 8px; border-bottom: 1px solid var(--border);
+  }
+  .tl-no { font-family: var(--display); font-size: 15px; font-weight: 700; color: var(--slate-2); }
+  .tl-role { font-family: var(--display); font-size: 21px; font-weight: 700; color: var(--navy); }
+  .tl-org { color: var(--slate-2); font-size: 15px; margin-top: 3px; }
+  .tl-detail { color: var(--slate); font-size: 15.5px; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 40px; }
+  .tag { font-size: 14px; font-weight: 500; color: var(--slate); background: var(--mist); border: 1px solid var(--border); padding: 8px 16px; border-radius: 100px; }
+
+  /* ---- Certifications ---- */
+  #certs { background: var(--mist); }
+  .cert-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  .cert { display: flex; gap: 18px; align-items: flex-start; background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 26px 28px; }
+  .cert .badge { width: 46px; height: 46px; flex: none; border-radius: 14px; background: var(--navy); display: flex; align-items: center; justify-content: center; }
+  .cert .badge svg { width: 24px; height: 24px; }
+  .cert h4 { font-family: var(--display); font-size: 16.5px; font-weight: 700; color: var(--navy); margin: 0 0 4px; }
+  .cert p { color: var(--slate-2); font-size: 14px; }
+
+  /* ---- Contact ---- */
+  .contact { position: relative; color: #fff; overflow: hidden; text-align: center; }
+  .contact-bg { position: absolute; inset: 0; z-index: 0; background: linear-gradient(160deg, #0A1B2E 0%, #0A2540 45%, #0A4B8C 120%); }
+  .contact-bg::before { content:""; position:absolute; inset:0; background: radial-gradient(60% 60% at 50% 0%, rgba(100,206,251,.28), transparent 70%); }
+  .contact-inner { position: relative; z-index: 2; padding: clamp(80px, 12vw, 150px) 0; }
+  .contact h2 { color: #fff; font-size: clamp(34px, 5.2vw, 64px); margin-bottom: 20px; }
+  .contact p.lead-c { color: rgba(233,241,250,.85); font-size: 19px; max-width: 54ch; margin: 0 auto 38px; }
+  .contact .cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .contact .loc { margin-top: 30px; font-size: 14.5px; color: rgba(233,241,250,.6); }
+
+  /* ---- Footer ---- */
+  footer.site { background: var(--ink); color: rgba(233,241,250,.6); padding: 48px 0; }
+  .foot-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  .foot-brand { display: flex; align-items: center; gap: 12px; }
+  .foot-brand .mark { width: 28px; height: auto; }
+  .foot-brand b { font-family: var(--display); font-weight: 700; letter-spacing: .01em; color: #fff; font-size: 15px; }
+  .foot-links { display: flex; gap: 24px; align-items: center; }
+  .foot-links a { color: rgba(233,241,250,.6); font-size: 14.5px; transition: color .2s; }
+  .foot-links a:hover { color: #fff; }
+  .foot-copy { font-size: 13.5px; }
+
+  /* ---- Scroll to top ---- */
+  #toTop {
+    position: fixed; right: 26px; bottom: 26px; z-index: 90;
+    width: 50px; height: 50px; border-radius: 50%; border: none; cursor: pointer;
+    background: var(--navy); color: #fff; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 12px 30px -8px rgba(10,37,64,.5);
+    opacity: 0; visibility: hidden; transform: translateY(16px) scale(.9);
+    transition: opacity .35s var(--ease), transform .35s var(--ease), background .25s, visibility .35s;
+  }
+  #toTop.show { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+  #toTop:hover { background: var(--accent); transform: translateY(-3px) scale(1.05); }
+  #toTop svg { width: 20px; height: 20px; }
+
+  /* ---- Reveal ---- */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+  .reveal.in { opacity: 1; transform: none; }
+  .reveal.d1 { transition-delay: .06s; } .reveal.d2 { transition-delay: .12s; }
+  .reveal.d3 { transition-delay: .18s; } .reveal.d4 { transition-delay: .24s; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .hero-bg img { animation: none; transform: none; }
+    .shine { animation: none; background-position: 50% center; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 980px) {
+    .about-grid { grid-template-columns: 1fr; gap: 56px; }
+    .about-photo { max-width: 460px; margin: 0 auto; }
+    .tl-item { grid-template-columns: 40px 1fr; gap: 8px 18px; }
+    .tl-detail { grid-column: 2 / 3; margin-top: 6px; }
+  }
+  @media (max-width: 768px) {
+    nav.links { display: none; }
+    .nav-toggle { display: inline-flex; }
+    .svc-grid, .cert-grid { grid-template-columns: 1fr; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .stat:nth-child(2) { border-right: none; }
+    .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid rgba(255,255,255,.1); }
+    .band .regions-row { gap: 28px; }
+    /* Hero: clear the header, stack the intro; headline stays 2 lines via nowrap */
+    .hero .hero-content { padding-top: 116px; padding-bottom: 52px; }
+    .hero-intro { flex-direction: column; gap: 12px; }
+    .hero-intro .intro-right { text-align: left; }
+    .hero-title { font-size: 8.6vw; line-height: 1.05; }
+    .hero-main { padding: 26px 0; }
+    .hero-cta { margin-top: 32px; }
+  }
+  @media (max-width: 560px) {
+    .container { padding: 0 22px; }
+    .svc { padding: 30px; }
+    .nav-right .icon-btn:not(.keep) { display: none; }
+  }
+</style>
+</head>
+<body id="top">
+
+<!-- ============ HEADER ============ -->
+<header class="site">
+  <div class="container nav-inner">
+    <a class="brand" href="#top" aria-label="Keystone SAP Advisory home">
+      <svg class="mark" viewBox="0 0 100 108" aria-hidden="true">
+        <mask id="kmHead">
+          <rect width="100" height="108" fill="#fff"/>
+          <path transform="translate(27.394 77.000) scale(0.06571 -0.06571)" d="M66 0V700H198V422H216L443 700H612L320 355L622 0H448L216 284H198V0Z" fill="#000"/>
+        </mask>
+        <path d="M34 6 H66 A4 4 0 0 1 69.9 9.1 L94 94 A5 5 0 0 1 89 100 H11 A5 5 0 0 1 6 94 L30.1 9.1 A4 4 0 0 1 34 6 Z" fill="currentColor" mask="url(#kmHead)"/>
+      </svg>
+      <span class="word"><b>Keystone</b><span>SAP ADVISORY</span></span>
+    </a>
+
+    <div class="nav-right">
+      <nav class="links" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#experience">Experience</a>
+        <a href="#certs">Credentials</a>
+        <a href="cv.html">CV</a>
+      </nav>
+      <a class="icon-btn" href="https://in.linkedin.com/in/ganesh-prabhu-70225b4" target="_blank" rel="noopener" aria-label="LinkedIn profile" title="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.75v20.5C0 23.2.8 24 1.77 24h20.45c.98 0 1.78-.8 1.78-1.75V1.75C24 .78 23.2 0 22.22 0z"/></svg>
+      </a>
+      <!-- EDIT: replace this email with a real address once set up. Currently a placeholder. -->
+      <a class="icon-btn keep" href="mailto:ganesh@keystonesapadvisory.com" aria-label="Email Ganesh" title="Email">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="M3 6l9 6 9-6"/></svg>
+      </a>
+      <a class="btn btn--primary nav-cta" href="#contact">Get in touch</a>
+      <button class="nav-toggle" aria-label="Jump to contact" onclick="location.href='#contact'">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <video class="hero-video" autoplay loop muted playsinline
+    poster="assets/images/hero-architecture.jpg"
+    src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260328_105406_16f4600d-7a92-4292-b96e-b19156c7830a.mp4"></video>
+  <div class="hero-overlay" aria-hidden="true"></div>
+
+  <div class="container hero-content">
+    <!-- Two-column intro row -->
+    <div class="hero-intro">
+      <p class="intro-left">I design and deliver SAP S/4HANA Project System solutions for large enterprises, and stay with the program from the first blueprint through go-live and hypercare.</p>
+      <p class="intro-right">7 S/4HANA implementations delivered across three&nbsp;continents.</p>
+    </div>
+
+    <!-- Centered headline -->
+    <div class="hero-main">
+      <p class="hero-kicker">Ganesh Prabhu · SAP Solution Architect</p>
+      <h1 class="hero-title">
+        <span class="line1">The keystone of your</span>
+        <span class="line2 shine">SAP transformation.</span>
+      </h1>
+      <a class="hero-cta" href="#contact">
+        Start a conversation
+        <svg class="cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STAT STRIP ============ -->
+<section class="stat-strip" aria-label="Key figures">
+  <div class="container">
+    <div class="stat-grid">
+      <div class="stat"><div class="num">22<em>+</em></div><div class="lbl">Years of SAP consulting</div></div>
+      <div class="stat"><div class="num">7</div><div class="lbl">S/4HANA implementations</div></div>
+      <div class="stat"><div class="num">3</div><div class="lbl">Global rollouts</div></div>
+      <div class="stat"><div class="num">8</div><div class="lbl">Industries served</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="section" id="about">
+  <div class="container about-grid">
+    <div class="about-copy reveal">
+      <div class="eyebrow">About</div>
+      <h2>I build the piece that holds it&nbsp;together.</h2>
+      <div class="body">
+        <p>I am an SAP Solution Architect specialising in Project System. Over the past 22 years I have worked across construction, manufacturing, chemicals, pharma, telecom, hospitality, media, and power and utilities.</p>
+        <p>Most of my work is connecting Project System to the rest of the business: Finance, Controlling, Procurement, Sales, Plant Maintenance, and Logistics. The aim is one system your teams can actually rely on. I run the executive workshops, do the fit-gap analysis, design the blueprint, and stay through build, testing, cutover, go-live, and hypercare. I do not hand the hard part to someone else.</p>
+        <p>So far that has meant seven end-to-end S/4HANA implementations, five on ECC, three global rollouts, and one Commercial Project Management delivery. I did that work at TCS, Infosys, PwC, and Capgemini and EY. Now I take it on directly, through Keystone SAP Advisory.</p>
+      </div>
+      <div class="sig">
+        <div class="sig line">Ganesh Prabhu</div>
+        <div class="role">Principal &amp; SAP Solution Architect</div>
+      </div>
+    </div>
+
+    <div class="about-photo reveal d2">
+      <div class="frame">
+        <img src="assets/images/ganesh-portrait.jpg" alt="Ganesh Prabhu at the Trinity College Long Room, beneath a suspended globe">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section class="section" id="services">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Services</div>
+      <h2>How I can help</h2>
+      <p>Senior, hands-on SAP work, from the first design decisions through delivery and the governance that keeps it&nbsp;running.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc reveal">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2E90FA" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg></div>
+        <div class="no">01</div>
+        <h3>SAP S/4HANA Project System</h3>
+        <p>WBS and network design, budgeting and availability control, cost planning, scheduling, settlement, and results analysis. This is the core of how project-driven businesses run in SAP, and it is what I know best.</p>
+      </div>
+      <div class="svc reveal d1">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2E90FA" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 17.5h7M17.5 14v7"/></svg></div>
+        <div class="no">02</div>
+        <h3>Enterprise Solution Architecture</h3>
+        <p>Solution blueprinting, fit-gap analysis, target operating models, and process harmonisation. The point is to make the SAP design fit the business you are actually trying to build.</p>
+      </div>
+      <div class="svc reveal d2">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2E90FA" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg></div>
+        <div class="no">03</div>
+        <h3>Global Rollouts &amp; Delivery</h3>
+        <p>Greenfield builds, brownfield conversions, and multi-country rollouts. That covers SIT, UAT, end-user training, cutover, production deployment, and the hypercare period right after.</p>
+      </div>
+      <div class="svc reveal d3">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#2E90FA" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <div class="no">04</div>
+        <h3>Advisory &amp; Centre of Excellence</h3>
+        <p>Architectural governance, presales and solutioning, SAP Centre of Excellence leadership, corporate training, and mentoring. I have built and led teams, and I am happy to help yours get stronger.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GLOBAL BAND ============ -->
+<section class="band">
+  <div class="band-bg" aria-hidden="true"><img src="assets/images/feature-global.jpg" alt=""></div>
+  <div class="container band-inner reveal">
+    <div class="eyebrow">Global reach</div>
+    <h2>Work delivered across three continents.</h2>
+    <p>Multinational programs need more than good configuration. They need someone who understands how each region actually works, keeps teams in different countries pulling the same way, and holds every rollout to one standard. That is the part I am usually brought in for.</p>
+    <div class="regions-row">
+      <div class="region"><b>Europe</b><span>Enterprise transformation</span></div>
+      <div class="region"><b>Middle East</b><span>Centre of Excellence</span></div>
+      <div class="region"><b>APAC</b><span>Delivery &amp; rollouts</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXPERIENCE ============ -->
+<section class="section" id="experience">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="eyebrow">Track record</div>
+      <h2>Two decades at the world's leading firms</h2>
+      <p>The same experience I built at these firms is what you get when you work with me&nbsp;directly.</p>
+    </div>
+    <div class="tl reveal">
+      <div class="tl-item">
+        <div class="tl-no">01</div>
+        <div><div class="tl-role">SAP Solution Architect</div><div class="tl-org">Tata Consultancy Services</div></div>
+        <div class="tl-detail">Led S/4HANA Project System solution architecture for large-scale enterprise transformation programs.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-no">02</div>
+        <div><div class="tl-role">Principal Consultant</div><div class="tl-org">Infosys Limited</div></div>
+        <div class="tl-detail">Directed global cross-functional teams through design, build, and deployment of integrated SAP PS solutions.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-no">03</div>
+        <div><div class="tl-role">Principal Consultant</div><div class="tl-org">PricewaterhouseCoopers (PwC)</div></div>
+        <div class="tl-detail">Advised enterprise clients on SAP Project System strategy, blueprinting, and delivery excellence.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-no">04</div>
+        <div><div class="tl-role">SAP PS Consultant</div><div class="tl-org">Capgemini / Ernst &amp; Young</div></div>
+        <div class="tl-detail">Delivered SAP Project System configuration and integration across complex client landscapes.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-no">05</div>
+        <div><div class="tl-role">SAP PS Consultant, CoE</div><div class="tl-org">Al-Ghanim Industries</div></div>
+        <div class="tl-detail">Led a SAP PS Centre of Excellence supporting four business units across the Middle East and India.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-no">06</div>
+        <div><div class="tl-role">Lead SAP PS Consultant</div><div class="tl-org">Bristlecone</div></div>
+        <div class="tl-detail">Delivered a greenfield S/4HANA PS implementation for EPC business scenarios, and led it through hypercare.</div>
+      </div>
+    </div>
+
+    <div class="tags" aria-label="Industries served">
+      <span class="tag">Engineering &amp; Construction</span>
+      <span class="tag">Manufacturing</span>
+      <span class="tag">Chemical</span>
+      <span class="tag">Pharmaceutical</span>
+      <span class="tag">Telecommunications</span>
+      <span class="tag">Hospitality</span>
+      <span class="tag">Media</span>
+      <span class="tag">Power &amp; Utilities</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CERTIFICATIONS ============ -->
+<section class="section" id="certs">
+  <div class="container">
+    <div class="sec-head center reveal">
+      <div class="eyebrow center">Credentials</div>
+      <h2>Certified and proven in the&nbsp;field</h2>
+    </div>
+    <div class="cert-grid">
+      <div class="cert reveal">
+        <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M9 14l-2 7 5-3 5 3-2-7"/></svg></div>
+        <div><h4>SAP Certified Application Associate</h4><p>SAP S/4HANA Portfolio &amp; Project Management</p></div>
+      </div>
+      <div class="cert reveal d1">
+        <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M9 14l-2 7 5-3 5 3-2-7"/></svg></div>
+        <div><h4>SAP Certified Application Consultant</h4><p>SAP Project System (PS)</p></div>
+      </div>
+      <div class="cert reveal d2">
+        <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h12v6a6 6 0 0 1-12 0z"/><path d="M12 14v4M8 22h8"/></svg></div>
+        <div><h4>Project Management Professional (PMP)</h4><p>Project Management Institute</p></div>
+      </div>
+      <div class="cert reveal d3">
+        <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1 2.5 3 6 3s6-2 6-3v-5"/></svg></div>
+        <div><h4>Education</h4><p>Master's in Financial Management · B.E. Chemical Engineering</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact">
+  <div class="contact-bg" aria-hidden="true"></div>
+  <div class="container contact-inner reveal">
+    <div class="eyebrow center" style="color:var(--accent-soft)">Get in touch</div>
+    <h2>Let's talk about your <span class="shine">transformation.</span></h2>
+    <p class="lead-c">If you are planning a greenfield S/4HANA build, a global rollout, or just want a second opinion from someone senior, I would be glad to talk it through.</p>
+    <div class="cta-row">
+      <a class="btn btn--white" href="https://in.linkedin.com/in/ganesh-prabhu-70225b4" target="_blank" rel="noopener">Connect on LinkedIn <span class="arw">→</span></a>
+      <!-- EDIT: replace with a real email once set up. Currently a placeholder. -->
+      <a class="btn btn--ghost" href="mailto:ganesh@keystonesapadvisory.com">Email me</a>
+    </div>
+    <p class="loc">Mumbai, India · Available remote</p>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site">
+  <div class="container foot-inner">
+    <div class="foot-brand">
+      <svg class="mark" viewBox="0 0 100 108" aria-hidden="true">
+        <mask id="kmFooterMain">
+          <rect width="100" height="108" fill="#fff"/>
+          <path transform="translate(27.394 77.000) scale(0.06571 -0.06571)" d="M66 0V700H198V422H216L443 700H612L320 355L622 0H448L216 284H198V0Z" fill="#000"/>
+        </mask>
+        <path d="M34 6 H66 A4 4 0 0 1 69.9 9.1 L94 94 A5 5 0 0 1 89 100 H11 A5 5 0 0 1 6 94 L30.1 9.1 A4 4 0 0 1 34 6 Z" fill="#fff" mask="url(#kmFooterMain)"/>
+      </svg>
+      <b>Keystone SAP Advisory</b>
+    </div>
+    <div class="foot-links">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="cv.html">CV</a>
+      <a href="https://in.linkedin.com/in/ganesh-prabhu-70225b4" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+    <div class="foot-copy">© 2026 Keystone SAP Advisory · Ganesh Prabhu</div>
+  </div>
+</footer>
+
+<!-- Scroll to top -->
+<button id="toTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script>
+  var header = document.querySelector('header.site');
+  var toTop = document.getElementById('toTop');
+  function onScroll(){
+    var y = window.scrollY;
+    header.classList.toggle('scrolled', y > 40);
+    toTop.classList.toggle('show', y > 600);
+  }
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  toTop.addEventListener('click', function(){ window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  }
+</script>
+</body>
+</html>

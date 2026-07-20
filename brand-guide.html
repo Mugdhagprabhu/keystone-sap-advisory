@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keystone SAP Advisory · Brand Guide</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:#0A2540; --primary:#0A4B8C; --accent:#2E90FA; --offwhite:#F4F7FB;
+    --slate:#4A5B70; --slate-2:#7C8AA0; --border:#E4EAF1; --white:#FFFFFF;
+    --display:'Schibsted Grotesk',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --sans:'Hanken Grotesk',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;}
+  body{margin:0;font-family:var(--sans);color:var(--ink);background:var(--offwhite);line-height:1.6;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:940px;margin:0 auto;padding:0 28px;}
+  h1,h2,h3{font-family:var(--display);font-weight:700;letter-spacing:-.02em;margin:0;}
+  .eyebrow{font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);}
+
+  header{background:linear-gradient(155deg,#0A2540,#0A4B8C);color:#fff;padding:64px 0;}
+  header .eyebrow{color:#7FB4F0;margin-bottom:14px;}
+  header h1{font-size:44px;color:#fff;}
+  header p{color:#C9DDEF;margin:12px 0 0;max-width:520px;}
+
+  section{padding:52px 0;border-bottom:1px solid var(--border);}
+  .sec-label{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--slate-2);margin-bottom:22px;}
+  h2{font-size:28px;margin-bottom:8px;}
+
+  /* Logo */
+  .logo-row{display:flex;gap:22px;flex-wrap:wrap;align-items:stretch;}
+  .logo-box{flex:1;min-width:220px;border:1px solid var(--border);border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:34px;gap:14px;}
+  .logo-box.dark{background:var(--ink);}
+  .logo-box.light{background:var(--white);}
+  .logo-box .cap{font-size:12px;color:var(--slate-2);}
+  .logo-box.dark .cap{color:rgba(255,255,255,.6);}
+  .lockup{display:flex;align-items:center;gap:12px;}
+  .lockup .word{display:flex;flex-direction:column;line-height:1;}
+  .lockup .word b{font-weight:700;font-size:18px;letter-spacing:.08em;}
+  .lockup .word span{font-size:10px;letter-spacing:.22em;margin-top:4px;font-weight:600;}
+  .note{color:var(--slate);font-size:14.5px;margin-top:18px;}
+
+  /* Colors */
+  .swatches{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  .swatch{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#fff;}
+  .swatch .chip{height:78px;}
+  .swatch .meta{padding:12px 14px;}
+  .swatch .name{font-weight:600;font-size:14px;}
+  .swatch .hex{font-size:12.5px;color:var(--slate-2);font-family:ui-monospace,Menlo,monospace;margin-top:2px;}
+  .swatch .var{font-size:11.5px;color:var(--slate-2);font-family:ui-monospace,Menlo,monospace;}
+
+  /* Type */
+  .type-row{border:1px solid var(--border);border-radius:12px;background:#fff;padding:26px;margin-bottom:16px;}
+  .type-row .k{font-size:12px;color:var(--slate-2);margin-bottom:8px;letter-spacing:.04em;}
+  .spec-serif{font-family:var(--display);font-weight:700;letter-spacing:-.03em;font-size:42px;color:var(--ink);}
+  .spec-sans{font-family:var(--sans);font-size:18px;color:var(--slate);}
+
+  .voice{background:#fff;border:1px solid var(--border);border-radius:12px;padding:24px;}
+  .voice ul{margin:12px 0 0;padding-left:20px;color:var(--slate);}
+  .voice li{margin-bottom:8px;}
+
+  @media(max-width:720px){.swatches{grid-template-columns:repeat(2,1fr);}header h1{font-size:34px;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow">Brand Guide</div>
+    <h1>Keystone SAP Advisory</h1>
+    <p>The visual system for Ganesh Prabhu's independent SAP consulting practice. A keystone is the stone that locks an arch together. The mark, the name, and the tone all point to that idea: the piece that makes a transformation hold.</p>
+  </div>
+</header>
+
+<!-- LOGO -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">01 · Logo</div>
+    <h2>The keystone mark</h2>
+    <p class="note" style="margin-top:6px;margin-bottom:26px;">A keystone stone with a Space Grotesk K set inside it. Use the two-tone navy stone on light backgrounds and the accent-blue stone on dark. Keep clear space around the mark equal to the height of the K. Do not stretch it, recolour it outside the palette, or add effects.</p>
+    <div class="logo-row">
+      <div class="logo-box light">
+        <svg width="80" height="86" viewBox="0 0 100 108" aria-label="Keystone mark on light">
+          <mask id="s1"><rect width="100" height="108" fill="#fff"/><path transform="translate(27.394 77) scale(0.06571 -0.06571)" d="M66 0V700H198V422H216L443 700H612L320 355L622 0H448L216 284H198V0Z" fill="#000"/></mask>
+          <path d="M34 6 H66 A4 4 0 0 1 69.9 9.1 L94 94 A5 5 0 0 1 89 100 H11 A5 5 0 0 1 6 94 L30.1 9.1 A4 4 0 0 1 34 6 Z" fill="#0A2540" mask="url(#s1)"/>
+        </svg>
+        <div class="cap">Primary · on light</div>
+      </div>
+      <div class="logo-box dark">
+        <svg width="80" height="86" viewBox="0 0 100 108" aria-label="Keystone mark on dark">
+          <mask id="s2"><rect width="100" height="108" fill="#fff"/><path transform="translate(27.394 77) scale(0.06571 -0.06571)" d="M66 0V700H198V422H216L443 700H612L320 355L622 0H448L216 284H198V0Z" fill="#000"/></mask>
+          <path d="M34 6 H66 A4 4 0 0 1 69.9 9.1 L94 94 A5 5 0 0 1 89 100 H11 A5 5 0 0 1 6 94 L30.1 9.1 A4 4 0 0 1 34 6 Z" fill="#fff" mask="url(#s2)"/>
+        </svg>
+        <div class="cap">White · on dark</div>
+      </div>
+      <div class="logo-box light">
+        <div class="lockup">
+          <svg width="42" height="45" viewBox="0 0 100 108" aria-hidden="true">
+            <mask id="s3"><rect width="100" height="108" fill="#fff"/><path transform="translate(27.394 77) scale(0.06571 -0.06571)" d="M66 0V700H198V422H216L443 700H612L320 355L622 0H448L216 284H198V0Z" fill="#000"/></mask>
+            <path d="M34 6 H66 A4 4 0 0 1 69.9 9.1 L94 94 A5 5 0 0 1 89 100 H11 A5 5 0 0 1 6 94 L30.1 9.1 A4 4 0 0 1 34 6 Z" fill="#0A2540" mask="url(#s3)"/>
+          </svg>
+          <span class="word"><b style="color:var(--ink)">Keystone</b><span style="color:var(--slate-2)">SAP ADVISORY</span></span>
+        </div>
+        <div class="cap">Horizontal lockup</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COLOR -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">02 · Colour</div>
+    <h2>Enterprise Blue palette</h2>
+    <p class="note" style="margin-top:6px;margin-bottom:26px;">Deep, trustworthy blues that read as enterprise SAP straight away. Ink and primary carry the structure, accent drives the calls to action, and the neutrals hold the text.</p>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#0A2540"></div><div class="meta"><div class="name">Ink Navy</div><div class="hex">#0A2540</div><div class="var">--ink</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#0A4B8C"></div><div class="meta"><div class="name">Primary Blue</div><div class="hex">#0A4B8C</div><div class="var">--primary</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#2E90FA"></div><div class="meta"><div class="name">Accent Blue</div><div class="hex">#2E90FA</div><div class="var">--accent</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#F7F9FB;border-bottom:1px solid var(--border)"></div><div class="meta"><div class="name">Off-white</div><div class="hex">#F7F9FB</div><div class="var">--offwhite</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#475569"></div><div class="meta"><div class="name">Slate</div><div class="hex">#475569</div><div class="var">--slate</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#64748B"></div><div class="meta"><div class="name">Slate 2</div><div class="hex">#64748B</div><div class="var">--slate-2</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#E2E8F0"></div><div class="meta"><div class="name">Border</div><div class="hex">#E2E8F0</div><div class="var">--border</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#FFFFFF;border-bottom:1px solid var(--border)"></div><div class="meta"><div class="name">White</div><div class="hex">#FFFFFF</div><div class="var">--white</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TYPE -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">03 · Typography</div>
+    <h2>Bold display, clean body</h2>
+    <p class="note" style="margin-top:6px;margin-bottom:26px;">Schibsted Grotesk gives headlines a confident, modern presence. Hanken Grotesk keeps body copy clean and highly legible. Both are free via Google Fonts.</p>
+    <div class="type-row">
+      <div class="k">Schibsted Grotesk · Headlines</div>
+      <div class="spec-serif">The keystone of your SAP transformation.</div>
+    </div>
+    <div class="type-row">
+      <div class="k">Hanken Grotesk · Body &amp; UI</div>
+      <div class="spec-sans">22+ years designing and delivering SAP S/4HANA Project System solutions for enterprises across Europe, the Middle East, and APAC.</div>
+    </div>
+  </div>
+</section>
+
+<!-- VOICE -->
+<section style="border-bottom:none;">
+  <div class="wrap">
+    <div class="sec-label">04 · Voice &amp; Tone</div>
+    <h2>How Keystone speaks</h2>
+    <div class="voice" style="margin-top:20px;">
+      <ul>
+        <li><b>Senior and plain-spoken.</b> Confidence comes from clarity, not jargon. Say what was delivered and what it achieved.</li>
+        <li><b>First person, accountable.</b> “I design… I stay accountable for the outcome.” The practice is one trusted expert, not a faceless firm.</li>
+        <li><b>Specific over grand.</b> Real numbers (22+ years, 7 S/4HANA implementations) and real scope (blueprint → go-live → hypercare) beat superlatives.</li>
+        <li><b>Restrained.</b> Generous whitespace, few words, no hype. The design should feel as considered as the work.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

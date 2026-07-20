@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+
+# Editor / temp
+__verify.html
+*.log
+
+# Raw source photo (kept locally; the processed ganesh-headshot.jpg is committed)
+assets/images/628458411_*.jpg
