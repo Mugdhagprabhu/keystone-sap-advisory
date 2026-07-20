@@ -183,6 +183,20 @@
     .sheet-foot { background: #fff !important; color: var(--slate-2); border-top: 1px solid var(--border); }
     .sheet-foot .fb b, .sheet-foot a { color: var(--navy); }
   }
+
+  /* ---- Scroll to top ---- */
+  #toTop {
+    position: fixed; right: 26px; bottom: 26px; z-index: 90;
+    width: 50px; height: 50px; border-radius: 50%; border: none; cursor: pointer;
+    background: var(--navy); color: #fff; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 12px 30px -8px rgba(10,37,64,.5);
+    opacity: 0; visibility: hidden; transform: translateY(16px) scale(.9);
+    transition: opacity .35s var(--ease), transform .35s var(--ease), background .25s, visibility .35s;
+  }
+  #toTop.show { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+  #toTop:hover { background: var(--ink); transform: translateY(-3px) scale(1.05); }
+  #toTop svg { width: 20px; height: 20px; }
+  @media print { #toTop { display: none; } }
 </style>
 </head>
 <body>
@@ -396,6 +410,19 @@
   </div>
 
 </div>
+
+<!-- Scroll to top -->
+<button id="toTop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script>
+  var toTop = document.getElementById('toTop');
+  function onScroll(){ toTop.classList.toggle('show', window.scrollY > 500); }
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  toTop.addEventListener('click', function(){ window.scrollTo({ top: 0, behavior: 'smooth' }); });
+</script>
 
 </body>
 </html>
