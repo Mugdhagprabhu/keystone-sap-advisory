@@ -248,17 +248,30 @@
   .svc h3 { font-size: 23px; margin: 6px 0 12px; }
   .svc p { color: var(--slate); font-size: 15.5px; }
 
-  /* ---- Global band (full-bleed image) ---- */
-  .band { position: relative; color: #fff; overflow: hidden; }
-  .band-bg { position: absolute; inset: 0; z-index: 0; }
-  .band-bg img { width: 100%; height: 100%; object-fit: cover; }
-  .band-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10,27,46,.92) 0%, rgba(10,27,46,.78) 45%, rgba(10,37,64,.55) 100%); }
+  /* ---- Global reach map ---- */
+  .band { position: relative; color: #fff; overflow: hidden; background: linear-gradient(135deg, #071b31 0%, #0a2540 52%, #0a3d6e 125%); }
+  .band-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+  .band-bg::after { content: ""; position: absolute; inset: 0; background: radial-gradient(65% 85% at 75% 42%, rgba(46,144,250,.18), transparent 68%), linear-gradient(135deg, rgba(6,19,34,.46), rgba(10,37,64,.16)); }
   .band-inner { position: relative; z-index: 2; padding: clamp(80px, 12vw, 150px) 0; }
   .band h2 { color: #fff; font-size: clamp(30px, 4.6vw, 56px); max-width: 16ch; margin-bottom: 24px; }
   .band p { color: rgba(233,241,250,.9); font-size: 19px; max-width: 52ch; }
-  .band .regions-row { display: flex; gap: 40px; margin-top: 46px; flex-wrap: wrap; }
-  .band .region b { font-family: var(--display); font-size: 30px; font-weight: 700; color: #fff; display: block; }
-  .band .region span { font-size: 14px; color: rgba(233,241,250,.65); letter-spacing: .04em; }
+  .reach-layout { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(260px, .55fr); gap: clamp(28px, 5vw, 68px); align-items: center; margin-top: 56px; }
+  .reach-map { position: relative; aspect-ratio: 2 / 1; min-width: 0; border: 1px solid rgba(157,221,255,.2); border-radius: 18px; background: linear-gradient(145deg, rgba(7,27,49,.86), rgba(14,57,92,.58)); box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 26px 60px -34px rgba(0,0,0,.7); overflow: hidden; }
+  .reach-map::before, .reach-map::after { content: ""; position: absolute; pointer-events: none; z-index: 1; }
+  .reach-map::before { inset: 11% 0; border-top: 1px solid rgba(157,221,255,.1); border-bottom: 1px solid rgba(157,221,255,.1); }
+  .reach-map::after { inset: 0 25%; border-left: 1px solid rgba(157,221,255,.07); border-right: 1px solid rgba(157,221,255,.07); }
+  .reach-map-image { position: absolute; inset: 0; width: 100%; height: 100%; padding: 7% 3%; opacity: .94; }
+  .reach-map-image img { width: 100%; height: 100%; object-fit: contain; }
+  .map-marker { position: absolute; z-index: 3; width: 17px; height: 17px; padding: 0; border: 2px solid #bdeaff; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px rgba(46,144,250,.18), 0 0 16px rgba(100,206,251,.72); transform: translate(-50%, -50%); cursor: default; transition: transform .22s var(--ease), box-shadow .22s var(--ease); }
+  .map-marker::after { content: attr(aria-label); position: absolute; left: 50%; bottom: calc(100% + 9px); transform: translateX(-50%) translateY(3px); white-space: nowrap; padding: 5px 8px; border-radius: 6px; background: rgba(6,19,34,.96); border: 1px solid rgba(157,221,255,.24); color: #fff; font: 600 11px/1.1 var(--body); letter-spacing: .02em; opacity: 0; pointer-events: none; transition: opacity .18s, transform .18s; }
+  .map-marker:hover, .map-marker:focus-visible { transform: translate(-50%, -50%) scale(1.28); box-shadow: 0 0 0 5px rgba(46,144,250,.22), 0 0 22px rgba(100,206,251,.92); outline: none; }
+  .map-marker:hover::after, .map-marker:focus-visible::after { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .city-list { display: grid; gap: 22px; }
+  .region { border-left: 2px solid rgba(100,206,251,.7); padding-left: 16px; }
+  .region b { font-family: var(--display); font-size: 22px; font-weight: 700; color: #fff; display: block; margin-bottom: 5px; }
+  .region span { display: block; font-size: 14px; line-height: 1.65; color: rgba(233,241,250,.7); letter-spacing: .01em; }
+  .reach-key { display: flex; align-items: center; gap: 9px; margin-top: 22px; color: rgba(233,241,250,.58); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+  .reach-key i { width: 9px; height: 9px; border: 1px solid #bdeaff; border-radius: 50%; background: var(--accent); box-shadow: 0 0 9px rgba(100,206,251,.8); }
 
   /* ---- Experience ---- */
   .tl { border-top: 1px solid var(--border); }
@@ -343,7 +356,9 @@
     .stat-grid { grid-template-columns: repeat(2, 1fr); }
     .stat:nth-child(2) { border-right: none; }
     .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid rgba(255,255,255,.1); }
-    .band .regions-row { gap: 28px; }
+    .reach-layout { grid-template-columns: 1fr; gap: 30px; margin-top: 42px; }
+    .city-list { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .reach-key { grid-column: 1 / -1; margin-top: 0; }
     /* Hero: clear the header, stack the intro; headline stays 2 lines via nowrap */
     .hero .hero-content { padding-top: 116px; padding-bottom: 52px; }
     .hero-intro { flex-direction: column; gap: 12px; }
@@ -355,6 +370,9 @@
   @media (max-width: 560px) {
     .container { padding: 0 22px; }
     .svc { padding: 30px; }
+    .city-list { grid-template-columns: 1fr; gap: 16px; }
+    .reach-map { border-radius: 14px; }
+    .map-marker { width: 15px; height: 15px; }
     .nav-right .icon-btn:not(.keep) { display: none; }
   }
 </style>
@@ -505,15 +523,36 @@
 
 <!-- ============ GLOBAL BAND ============ -->
 <section class="band">
-  <div class="band-bg" aria-hidden="true"><img src="assets/images/feature-global.jpg" alt=""></div>
+  <div class="band-bg" aria-hidden="true"></div>
   <div class="container band-inner reveal">
     <div class="eyebrow">Global reach</div>
     <h2>Work delivered across three continents.</h2>
     <p>Multinational programs need more than good configuration. They need someone who understands how each region actually works, keeps teams in different countries pulling the same way, and holds every rollout to one standard. That is the part I am usually brought&nbsp;in&nbsp;for.</p>
-    <div class="regions-row">
-      <div class="region"><b>Europe</b><span>Enterprise transformation</span></div>
-      <div class="region"><b>Middle East</b><span>Centre of Excellence</span></div>
-      <div class="region"><b>APAC</b><span>Delivery &amp; rollouts</span></div>
+    <div class="reach-layout">
+      <div class="reach-map" role="img" aria-label="World map showing 15 cities where work has been delivered">
+        <div class="reach-map-image" aria-hidden="true"><img src="assets/maps/world.svg" alt=""></div>
+        <button class="map-marker" style="left:39.2%;top:31.9%" aria-label="London"></button>
+        <button class="map-marker" style="left:49.9%;top:22.2%" aria-label="Stockholm"></button>
+        <button class="map-marker" style="left:51.6%;top:22.3%" aria-label="Helsinki"></button>
+        <button class="map-marker" style="left:48.5%;top:29.9%" aria-label="Hamburg"></button>
+        <button class="map-marker" style="left:57.4%;top:40.7%" aria-label="Kuwait"></button>
+        <button class="map-marker" style="left:60.0%;top:49.5%" aria-label="Muscat"></button>
+        <button class="map-marker" style="left:69.9%;top:57.3%" aria-label="Mumbai"></button>
+        <button class="map-marker" style="left:70.3%;top:57.8%" aria-label="Pune"></button>
+        <button class="map-marker" style="left:71.2%;top:52.1%" aria-label="Faridabad"></button>
+        <button class="map-marker" style="left:70.6%;top:54.7%" aria-label="Ahmedabad"></button>
+        <button class="map-marker" style="left:71.2%;top:55.1%" aria-label="Baroda (Vadodara)"></button>
+        <button class="map-marker" style="left:72.0%;top:62.2%" aria-label="Bengaluru"></button>
+        <button class="map-marker" style="left:72.8%;top:63.7%" aria-label="Chennai"></button>
+        <button class="map-marker" style="left:77.4%;top:51.5%" aria-label="Hong Kong"></button>
+        <button class="map-marker" style="left:78.8%;top:65.1%" aria-label="Singapore"></button>
+      </div>
+      <div class="city-list" aria-label="Cities grouped by region">
+        <div class="region"><b>Europe</b><span>London · Stockholm · Helsinki · Hamburg</span></div>
+        <div class="region"><b>Middle East</b><span>Kuwait · Muscat</span></div>
+        <div class="region"><b>APAC</b><span>Mumbai · Pune · Faridabad · Ahmedabad · Baroda · Bengaluru · Chennai · Hong Kong · Singapore</span></div>
+        <div class="reach-key"><i aria-hidden="true"></i> Cities where I have worked</div>
+      </div>
     </div>
   </div>
 </section>
