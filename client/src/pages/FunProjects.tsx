@@ -1,0 +1,15 @@
+import { ArrowUpRight, Award, Sparkles } from "lucide-react";
+import { Link } from "wouter";
+import FlipCard from "../components/FlipCard";
+import ImagePlaceholder from "../components/ImagePlaceholder";
+
+export default function FunProjects() {
+  return (
+    <div className="inner-page fun-page">
+      <section className="inner-hero"><div className="container inner-hero-inner"><span className="eyebrow">03 / the lighter bits</span><h1>Side quests<br /><em>& fun stuff.</em></h1><p>Small experiments, UX Hacks submissions, and the ideas I keep around because they make me curious.</p></div></section>
+      <section className="section-block fun-section"><div className="container"><div className="mini-section-head"><span>UX HACKS / 01</span><h2>Three quick swings.</h2><p>Redesigns and concepts made to practice noticing the moment where a product could feel a little more welcoming.</p></div><div className="fun-project-grid"><article className="fun-project-card card-razor"><div className="fun-card-top"><span>01 / Razorpay</span><Sparkles size={18} /></div><ImagePlaceholder label="RAZORPAY / concept" size="replace with screenshot" ratio="4 / 3" tone="yellow" /><h3>Make the money part feel less scary.</h3><p>A redesign / concept for a familiar financial flow, with more breathing room and clearer intent.</p><a href="#placeholder-razorpay">view placeholder <ArrowUpRight size={15} /></a></article><article className="fun-project-card card-adobe"><div className="fun-card-top"><span>02 / Adobe</span><Sparkles size={18} /></div><ImagePlaceholder label="ADOBE / concept" size="replace with screenshot" ratio="4 / 3" tone="paper" /><h3>Invite people into the canvas.</h3><p>A redesign / concept exploring how a creative tool might say hello before asking for anything.</p><a href="#placeholder-adobe">view placeholder <ArrowUpRight size={15} /></a></article><article className="fun-project-card card-airtel"><div className="fun-card-top"><span>03 / Airtel Xstream</span><Award size={18} /></div><ImagePlaceholder label="AIRTEL XSTREAM / concept" size="replace with screenshot" ratio="4 / 3" tone="pink" /><div className="honourable"><Award size={16} /> honourable mention</div><h3>A small experiment that got a small nod.</h3><p>A concept submission recognised with an honourable mention.</p><a href="#placeholder-airtel">view placeholder <ArrowUpRight size={15} /></a></article></div></div></section>
+      <section className="section-block vvs-section"><div className="container vvs-layout"><div><span className="eyebrow">04 / original vs. rethink</span><h2>One screen.<br /><em>Two points of view.</em></h2><p>The original VVS screen on one side, my redesign on the other. Hover on desktop, tap on mobile.</p><div className="carousel-dots"><span className="active" /><span /><span /></div></div><FlipCard /></div></section>
+      <section className="inner-end"><div className="container"><Link className="text-link" href="/#work">Back to selected work <ArrowUpRight size={15} /></Link></div></section>
+    </div>
+  );
+}
